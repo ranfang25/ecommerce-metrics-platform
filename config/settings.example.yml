@@ -1,0 +1,5 @@
+snapshot: data/official/events.parquet
+manifest: data/official/manifest.json
+output: data/official_build
+expected_start: '2020-11-01'
+expected_end: '2021-01-31'

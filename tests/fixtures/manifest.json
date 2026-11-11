@@ -1,0 +1,23 @@
+{
+  "source_kind": "controlled",
+  "source": "固定种子生成，仅供技术测试",
+  "rows": 5607,
+  "start": "2020-11-01",
+  "end": "2020-11-28",
+  "exported_at": "2026-11-11T03:14:55.801394+00:00",
+  "fields": [
+    "event_date",
+    "event_timestamp",
+    "event_name",
+    "user_pseudo_id",
+    "ga_session_id",
+    "device",
+    "first_source",
+    "transaction_id",
+    "purchase_revenue_usd",
+    "currency",
+    "items_json"
+  ],
+  "seed": 20261111,
+  "version": "1.0.0"
+}

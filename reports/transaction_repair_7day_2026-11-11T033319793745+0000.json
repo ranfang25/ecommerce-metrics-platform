@@ -1,0 +1,14 @@
+{
+  "source": "官方GA4购买事件",
+  "job_id": "c270926a-8bf1-42f6-845a-dd2b78a27291",
+  "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(NULLIF(ecommerce.transaction_id,''),\n    (SELECT COALESCE(value.string_value,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end AND event_name='purchase'",
+  "snapshot": "data/official_7day",
+  "purchase_events": 273,
+  "missing_transaction_before": 23,
+  "missing_transaction_after": 0,
+  "non_transaction_fields_equal": true,
+  "event_rows_before": 328463,
+  "event_rows_after": 328463,
+  "backup": "data\\official_7day\\initial_extract_v1",
+  "repaired_at": "2026-11-11T03:31:39.165262+00:00"
+}

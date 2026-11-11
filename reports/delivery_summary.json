@@ -1,0 +1,53 @@
+{
+  "generated_at": "2026-11-11T04:38:58.607670+00:00",
+  "run_id": "2026-11-11T042024754230+0000_d282ec41",
+  "source_kind": "official",
+  "event_rows": 4295584,
+  "users": 270154,
+  "sessions": 360129,
+  "orders": 4888,
+  "recorded_purchase_usd": 337993.0,
+  "tests_passed": 15,
+  "quality_passed": 19,
+  "quality_warnings": 1,
+  "filtered_reconciliations": 192,
+  "browser_export_reconciliations": 12,
+  "fault_cases_closed": 3,
+  "browser_p95": [
+    {
+      "page": "指标与数据运营",
+      "n": 20,
+      "p50_seconds": 2.2939999999999996,
+      "p95_seconds": 3.38315,
+      "target_seconds": 3,
+      "meets_target": false
+    },
+    {
+      "page": "用户分层",
+      "n": 20,
+      "p50_seconds": 3.1675,
+      "p95_seconds": 3.2493000000000003,
+      "target_seconds": 3,
+      "meets_target": false
+    },
+    {
+      "page": "经营总览",
+      "n": 20,
+      "p50_seconds": 3.2664999999999997,
+      "p95_seconds": 3.9930500000000015,
+      "target_seconds": 3,
+      "meets_target": false
+    },
+    {
+      "page": "转化诊断",
+      "n": 20,
+      "p50_seconds": 2.4985,
+      "p95_seconds": 3.60905,
+      "target_seconds": 3,
+      "meets_target": false
+    }
+  ],
+  "user_validation": "pending",
+  "continuous_narrated_recording": "pending",
+  "video_type": "实际页面截图与运行结果回放，非连续录屏、无旁白"
+}

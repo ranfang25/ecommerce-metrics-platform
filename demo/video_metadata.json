@@ -1,0 +1,16 @@
+{
+  "kind": "真实页面截图与结果回放，非连续录屏，无旁白",
+  "duration_seconds": 359.5,
+  "frames": 719,
+  "source_screenshots": [
+    "demo/screenshots/01_overview.png",
+    "demo/screenshots/01_overview.png",
+    "demo/screenshots/01_overview.png",
+    "demo/screenshots/02_funnel.png",
+    "demo/screenshots/03_segments.png",
+    "demo/screenshots/04_operations.png",
+    "demo/screenshots/04_operations.png",
+    "demo/screenshots/01_overview.png"
+  ],
+  "video_bytes": 1482289
+}

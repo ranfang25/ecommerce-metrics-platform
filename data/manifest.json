@@ -1,0 +1,953 @@
+{
+  "source_kind": "official",
+  "source": "bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*",
+  "start": "2020-11-01",
+  "end": "2021-01-31",
+  "exported_at": "2026-11-11T03:36:54.277186+00:00",
+  "rows": 4295584,
+  "fields": [
+    "event_date",
+    "event_timestamp",
+    "event_name",
+    "user_pseudo_id",
+    "ga_session_id",
+    "device",
+    "first_source",
+    "transaction_id",
+    "purchase_revenue_usd",
+    "currency",
+    "items_json"
+  ],
+  "sql": "sql/bigquery_extract/events.sql",
+  "files": [
+    {
+      "file": "events_20201101.parquet",
+      "rows": 31272,
+      "bytes": 529858,
+      "job_id": "192e52a8-6f95-4151-aa68-9c77bf2b3351",
+      "processed_bytes": 13269491,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201102.parquet",
+      "rows": 48388,
+      "bytes": 866604,
+      "job_id": "25c41fdb-6779-4aa3-aa25-76ac43feb1e7",
+      "processed_bytes": 20812293,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201103.parquet",
+      "rows": 61672,
+      "bytes": 1120995,
+      "job_id": "96b18127-cce8-40c5-8b2d-ff0174177d28",
+      "processed_bytes": 26186717,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201104.parquet",
+      "rows": 51866,
+      "bytes": 936029,
+      "job_id": "d4603b37-5dbf-49f7-b459-8e123b2f1ec2",
+      "processed_bytes": 22192337,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201105.parquet",
+      "rows": 51952,
+      "bytes": 910350,
+      "job_id": "7127b6de-1adc-4608-b482-336c4a550ef8",
+      "processed_bytes": 22487268,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201106.parquet",
+      "rows": 49004,
+      "bytes": 904712,
+      "job_id": "e4d65aef-27bc-48aa-beac-4c79b1d4b146",
+      "processed_bytes": 21627787,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201107.parquet",
+      "rows": 34309,
+      "bytes": 604003,
+      "job_id": "3451eb02-69f2-4541-bc23-9da95c28a19b",
+      "processed_bytes": 14994027,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201108.parquet",
+      "rows": 30137,
+      "bytes": 494870,
+      "job_id": "3b8218dd-0416-49ba-8972-6179a60e1c72",
+      "processed_bytes": 12882707,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201109.parquet",
+      "rows": 44756,
+      "bytes": 771029,
+      "job_id": "5d0f923c-9bc1-4658-9011-95c298d75c9b",
+      "processed_bytes": 19395131,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201110.parquet",
+      "rows": 51195,
+      "bytes": 946773,
+      "job_id": "bbdf87c2-d7c9-42d6-906f-e6d857aed03c",
+      "processed_bytes": 22448015,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201111.parquet",
+      "rows": 51941,
+      "bytes": 930177,
+      "job_id": "a50e67c9-dac1-4bfe-a5b3-c5daff5d5804",
+      "processed_bytes": 22621243,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201112.parquet",
+      "rows": 49166,
+      "bytes": 876396,
+      "job_id": "97457378-6190-4b90-a427-7c754326e4a7",
+      "processed_bytes": 21475173,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201113.parquet",
+      "rows": 50358,
+      "bytes": 868439,
+      "job_id": "a6294cd0-edcf-43dd-9365-e49213f6689c",
+      "processed_bytes": 21952038,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201114.parquet",
+      "rows": 34039,
+      "bytes": 564881,
+      "job_id": "93c2b707-de75-47d1-8562-233c810aa36a",
+      "processed_bytes": 14681663,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201115.parquet",
+      "rows": 31195,
+      "bytes": 507838,
+      "job_id": "4fb15110-cf91-4166-89ac-ea52c9d1bd22",
+      "processed_bytes": 13319803,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201116.parquet",
+      "rows": 49320,
+      "bytes": 871435,
+      "job_id": "4f4ce5d3-134d-4479-acdc-01d47175dad8",
+      "processed_bytes": 21511352,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201117.parquet",
+      "rows": 59789,
+      "bytes": 1146530,
+      "job_id": "206d62f5-4ccc-476b-8325-f1414193dce9",
+      "processed_bytes": 26603351,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201118.parquet",
+      "rows": 55456,
+      "bytes": 1060128,
+      "job_id": "431d475a-be7c-435f-83b1-c791e8061311",
+      "processed_bytes": 24499174,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201119.parquet",
+      "rows": 53932,
+      "bytes": 949153,
+      "job_id": "9e982a19-765a-422d-b797-54451433d93c",
+      "processed_bytes": 23413899,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201120.parquet",
+      "rows": 57894,
+      "bytes": 1043990,
+      "job_id": "9c0a58d4-3264-4bb1-85f4-d364e57efc1f",
+      "processed_bytes": 25464626,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201121.parquet",
+      "rows": 41980,
+      "bytes": 720644,
+      "job_id": "f1bb52a7-d55e-412a-953c-19f506bcc980",
+      "processed_bytes": 18107910,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201122.parquet",
+      "rows": 36446,
+      "bytes": 609074,
+      "job_id": "cdd49930-8c73-493e-81e9-4e831bfb904a",
+      "processed_bytes": 15666538,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201123.parquet",
+      "rows": 52844,
+      "bytes": 929411,
+      "job_id": "444b59b7-cd7a-43d7-ba25-ee60956f3fd0",
+      "processed_bytes": 22976324,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201124.parquet",
+      "rows": 62971,
+      "bytes": 1240492,
+      "job_id": "6cc5a32a-974a-4ee2-a618-c25b35a73e3b",
+      "processed_bytes": 28111098,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201125.parquet",
+      "rows": 64469,
+      "bytes": 1291579,
+      "job_id": "a5c01851-b6b3-4d57-86d0-bffbc4307838",
+      "processed_bytes": 28655800,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201126.parquet",
+      "rows": 54681,
+      "bytes": 1131394,
+      "job_id": "97634d09-171d-48d0-9c3a-4b3098dcf94c",
+      "processed_bytes": 24266598,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201127.parquet",
+      "rows": 54254,
+      "bytes": 1188360,
+      "job_id": "d12684fb-551f-4c7e-8832-71a92e2e2bce",
+      "processed_bytes": 24638868,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201128.parquet",
+      "rows": 44643,
+      "bytes": 975357,
+      "job_id": "b83b0787-840c-4a36-a801-204e00166572",
+      "processed_bytes": 20158791,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201129.parquet",
+      "rows": 42169,
+      "bytes": 860639,
+      "job_id": "220102c6-835a-45f9-a40e-0cc4770187fe",
+      "processed_bytes": 18715021,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201130.parquet",
+      "rows": 70614,
+      "bytes": 1626124,
+      "job_id": "e4307fc6-c0cf-4c4e-b0ea-4a9894b9b5cb",
+      "processed_bytes": 32719081,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201201.parquet",
+      "rows": 71804,
+      "bytes": 1625743,
+      "job_id": "b6293032-cb8e-4ff8-9432-67e3e543bae8",
+      "processed_bytes": 33115031,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201202.parquet",
+      "rows": 66832,
+      "bytes": 1525505,
+      "job_id": "0ed2a0d5-948e-4074-bc70-7f7b41b37786",
+      "processed_bytes": 30781710,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201203.parquet",
+      "rows": 71689,
+      "bytes": 1567550,
+      "job_id": "2c732985-8a40-4ef2-8694-c9ffc94e2882",
+      "processed_bytes": 32646966,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201204.parquet",
+      "rows": 69393,
+      "bytes": 1631052,
+      "job_id": "766e4cf6-ce63-4152-a54e-aa24e574c148",
+      "processed_bytes": 32412140,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201205.parquet",
+      "rows": 49528,
+      "bytes": 1101862,
+      "job_id": "0a151dfa-e52c-407c-958c-9fb55186923d",
+      "processed_bytes": 22719946,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201206.parquet",
+      "rows": 42828,
+      "bytes": 893650,
+      "job_id": "900b4481-69e6-4ab6-9bc0-ab7353836a03",
+      "processed_bytes": 19196509,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201207.parquet",
+      "rows": 71632,
+      "bytes": 1571920,
+      "job_id": "af9288a1-5dfb-400a-9689-8c20a4ff0f1e",
+      "processed_bytes": 32630510,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201208.parquet",
+      "rows": 92199,
+      "bytes": 1990817,
+      "job_id": "c77eab91-7a67-41e0-acd5-d13c9fb922f6",
+      "processed_bytes": 41149527,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201209.parquet",
+      "rows": 82315,
+      "bytes": 1889964,
+      "job_id": "db382550-696b-42df-bc23-96209a1900f6",
+      "processed_bytes": 38002044,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201210.parquet",
+      "rows": 80855,
+      "bytes": 1874648,
+      "job_id": "21ee2195-d27a-4371-bb5e-8d1b6e3bf981",
+      "processed_bytes": 37525639,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201211.parquet",
+      "rows": 75780,
+      "bytes": 1874080,
+      "job_id": "dd98a1b0-c4f3-4d7a-bef4-3fb66405a33c",
+      "processed_bytes": 35891547,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201212.parquet",
+      "rows": 56146,
+      "bytes": 1265098,
+      "job_id": "569405c2-2479-4238-9e0a-95ede17aa292",
+      "processed_bytes": 25848511,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201213.parquet",
+      "rows": 46886,
+      "bytes": 996657,
+      "job_id": "75c8a551-1e8c-45fe-a35e-deb194ced86e",
+      "processed_bytes": 21217089,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201214.parquet",
+      "rows": 66082,
+      "bytes": 1567899,
+      "job_id": "2c4d9b5f-373d-4e25-8f85-e00b6fb3fd36",
+      "processed_bytes": 31014783,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201215.parquet",
+      "rows": 72774,
+      "bytes": 1840359,
+      "job_id": "76c5db4c-9d56-449f-b088-dbcdcf903254",
+      "processed_bytes": 35266908,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201216.parquet",
+      "rows": 67497,
+      "bytes": 1684331,
+      "job_id": "b2b92a70-73ab-4310-975c-b5d2469c0f4f",
+      "processed_bytes": 32733868,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201217.parquet",
+      "rows": 63887,
+      "bytes": 1603769,
+      "job_id": "9c83283d-5f7f-4a19-abbf-ae543726da81",
+      "processed_bytes": 31005701,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201218.parquet",
+      "rows": 56742,
+      "bytes": 1445036,
+      "job_id": "3e210509-a045-4311-87d9-8809d82a8582",
+      "processed_bytes": 27653564,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201219.parquet",
+      "rows": 37342,
+      "bytes": 860342,
+      "job_id": "a3df8ddc-f74f-4790-8b02-683f0946ca07",
+      "processed_bytes": 17534715,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201220.parquet",
+      "rows": 30071,
+      "bytes": 674202,
+      "job_id": "715bfcdd-560a-4f4f-adb6-7cf1742ee02d",
+      "processed_bytes": 13799142,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201221.parquet",
+      "rows": 42623,
+      "bytes": 986743,
+      "job_id": "7d4f4b74-7e3f-405f-b24d-c6112ffb72a2",
+      "processed_bytes": 20164810,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201222.parquet",
+      "rows": 44519,
+      "bytes": 1097733,
+      "job_id": "507db8bf-ea12-4b28-b304-dfeaf3145c22",
+      "processed_bytes": 21513523,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201223.parquet",
+      "rows": 40040,
+      "bytes": 1002399,
+      "job_id": "49ebff2b-6db1-4da0-950b-b4c847f60245",
+      "processed_bytes": 19331549,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201224.parquet",
+      "rows": 26139,
+      "bytes": 611351,
+      "job_id": "e40bdf56-e945-4876-9c81-2d48c7020bb5",
+      "processed_bytes": 12115335,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201225.parquet",
+      "rows": 21355,
+      "bytes": 487711,
+      "job_id": "f35aace1-3e2b-42f5-afd6-3a3cfa42b732",
+      "processed_bytes": 9724086,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201226.parquet",
+      "rows": 22121,
+      "bytes": 495410,
+      "job_id": "e6ba096c-d85e-43d1-a91b-28550b1cf682",
+      "processed_bytes": 9916322,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201227.parquet",
+      "rows": 22496,
+      "bytes": 522483,
+      "job_id": "243eda05-bc9d-4361-9716-2b8b22e6b993",
+      "processed_bytes": 10188562,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201228.parquet",
+      "rows": 32576,
+      "bytes": 740866,
+      "job_id": "edb5011e-9996-4aaa-b20f-48f2e67d086c",
+      "processed_bytes": 14671881,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201229.parquet",
+      "rows": 33975,
+      "bytes": 699234,
+      "job_id": "20262a4c-e6dc-424d-ad4e-5d140ca4baa6",
+      "processed_bytes": 14399992,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201230.parquet",
+      "rows": 30062,
+      "bytes": 594636,
+      "job_id": "a99278c0-bce2-45a2-8980-90e71202c2de",
+      "processed_bytes": 12546342,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20201231.parquet",
+      "rows": 24537,
+      "bytes": 514344,
+      "job_id": "e0574333-79c3-4106-9698-109e76d08c91",
+      "processed_bytes": 10363234,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210101.parquet",
+      "rows": 22096,
+      "bytes": 450428,
+      "job_id": "7bdf24ce-8aba-477e-9dfa-8fb865d409e3",
+      "processed_bytes": 9293507,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210102.parquet",
+      "rows": 23599,
+      "bytes": 458093,
+      "job_id": "3c3d0c8a-6196-4c65-85d6-398fa845fd4d",
+      "processed_bytes": 9674036,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210103.parquet",
+      "rows": 24743,
+      "bytes": 474327,
+      "job_id": "418cad7b-6dbc-4219-858d-8d295962acc2",
+      "processed_bytes": 10158759,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210104.parquet",
+      "rows": 31395,
+      "bytes": 603656,
+      "job_id": "edd42558-cf8e-4e03-bdf5-5437d3de5e54",
+      "processed_bytes": 12973139,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210105.parquet",
+      "rows": 42827,
+      "bytes": 842133,
+      "job_id": "39d983f5-8fd8-4115-ac75-39199d6eec03",
+      "processed_bytes": 17508575,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210106.parquet",
+      "rows": 56076,
+      "bytes": 1079298,
+      "job_id": "ea353f7e-ca8a-4379-82f6-5fcf7e11ccd4",
+      "processed_bytes": 22327322,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210107.parquet",
+      "rows": 44473,
+      "bytes": 894892,
+      "job_id": "1745e3ce-0fba-424e-b461-f3847090bede",
+      "processed_bytes": 18254106,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210108.parquet",
+      "rows": 41201,
+      "bytes": 815507,
+      "job_id": "cf7149a3-8dc1-4ff9-b834-74ce4bcc2bf6",
+      "processed_bytes": 17120522,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210109.parquet",
+      "rows": 31630,
+      "bytes": 635241,
+      "job_id": "f400f01c-8110-4ce6-968a-5ecab8fa24ce",
+      "processed_bytes": 13242233,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210110.parquet",
+      "rows": 27429,
+      "bytes": 537249,
+      "job_id": "7bda366d-76c4-4040-8b1f-db3737c20ecb",
+      "processed_bytes": 11321424,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210111.parquet",
+      "rows": 38144,
+      "bytes": 756634,
+      "job_id": "33ee5e22-ef05-4133-b6e6-a8b95e909e2d",
+      "processed_bytes": 15804851,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210112.parquet",
+      "rows": 48498,
+      "bytes": 1000780,
+      "job_id": "083f0d1d-bc4e-421c-a7fd-a17f77cc601d",
+      "processed_bytes": 20435370,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210113.parquet",
+      "rows": 45541,
+      "bytes": 933544,
+      "job_id": "f246662b-96cd-4f80-9083-21552cadbacd",
+      "processed_bytes": 19027170,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210114.parquet",
+      "rows": 45685,
+      "bytes": 945322,
+      "job_id": "6b650c8b-b1ec-472d-96b0-4ba1e83cc26d",
+      "processed_bytes": 19357584,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210115.parquet",
+      "rows": 40405,
+      "bytes": 847906,
+      "job_id": "5eb58cfe-43ca-4b66-8ca7-1713435d3cf7",
+      "processed_bytes": 17218325,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210116.parquet",
+      "rows": 30261,
+      "bytes": 600026,
+      "job_id": "2b261af1-553a-415f-9e59-34312f155fc9",
+      "processed_bytes": 12577826,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210117.parquet",
+      "rows": 27064,
+      "bytes": 515409,
+      "job_id": "681f1120-0f47-40e9-a7ce-f7acadc15616",
+      "processed_bytes": 11090498,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210118.parquet",
+      "rows": 32358,
+      "bytes": 612029,
+      "job_id": "23f5e1d0-c02b-4b46-a416-999f8d37e686",
+      "processed_bytes": 13175902,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210119.parquet",
+      "rows": 50474,
+      "bytes": 1072324,
+      "job_id": "27daa571-3c71-4c99-b296-03a8edfc0a41",
+      "processed_bytes": 21948845,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210120.parquet",
+      "rows": 64109,
+      "bytes": 1422071,
+      "job_id": "f812ae51-20d1-4a59-88b1-d7126c4468aa",
+      "processed_bytes": 28329368,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210121.parquet",
+      "rows": 52686,
+      "bytes": 1087699,
+      "job_id": "3364b07d-4448-486e-9b54-59f2ae5d45e4",
+      "processed_bytes": 22532848,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210122.parquet",
+      "rows": 49922,
+      "bytes": 1081880,
+      "job_id": "0fcdbf1d-c1da-4995-8f31-e1fa3e06f142",
+      "processed_bytes": 21781400,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210123.parquet",
+      "rows": 34322,
+      "bytes": 699749,
+      "job_id": "a83741b6-ad86-48a9-b002-d7e1ff9f3720",
+      "processed_bytes": 14606267,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210124.parquet",
+      "rows": 31702,
+      "bytes": 666006,
+      "job_id": "a3561cab-7b61-42d5-b01b-33d0467c7405",
+      "processed_bytes": 13564739,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210125.parquet",
+      "rows": 41718,
+      "bytes": 835957,
+      "job_id": "c68bdef3-61e8-4f94-a395-8b61cbed2217",
+      "processed_bytes": 17571765,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210126.parquet",
+      "rows": 42232,
+      "bytes": 819904,
+      "job_id": "b9c22a9a-faba-4c7a-9b29-5c950065cc54",
+      "processed_bytes": 17647800,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210127.parquet",
+      "rows": 48665,
+      "bytes": 971128,
+      "job_id": "8d281b23-7900-4737-b271-a8986da1ef9c",
+      "processed_bytes": 20449500,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210128.parquet",
+      "rows": 43131,
+      "bytes": 855292,
+      "job_id": "9de58617-dca7-4645-894c-910ef5744d2d",
+      "processed_bytes": 18090279,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210129.parquet",
+      "rows": 40877,
+      "bytes": 818013,
+      "job_id": "de40014c-0287-4147-bd4d-04c746c67840",
+      "processed_bytes": 17244077,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210130.parquet",
+      "rows": 30395,
+      "bytes": 605814,
+      "job_id": "56e9e985-6902-445f-9895-6a381284330f",
+      "processed_bytes": 12693933,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    },
+    {
+      "file": "events_20210131.parquet",
+      "rows": 26489,
+      "bytes": 502528,
+      "job_id": "ca298f0f-697a-4eb7-8c9d-b0b2cd7d2874",
+      "processed_bytes": 10863400,
+      "sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  COALESCE(CASE WHEN ecommerce.transaction_id NOT IN ('','(not set)','<Other>') THEN ecommerce.transaction_id END,\n    (SELECT COALESCE(CASE WHEN value.string_value NOT IN ('','(not set)','<Other>') THEN value.string_value END,CAST(value.int_value AS STRING)) FROM UNNEST(event_params) WHERE key='transaction_id' LIMIT 1)) AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n",
+      "transaction_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+      "initial_sql": "-- 参数与商品分别读取，避免两个重复数组相乘\nSELECT event_date, event_timestamp, event_name, user_pseudo_id,\n  (SELECT value.int_value FROM UNNEST(event_params) WHERE key='ga_session_id' LIMIT 1) AS ga_session_id,\n  device.category AS device,\n  traffic_source.source AS first_source,\n  ecommerce.transaction_id AS transaction_id,\n  ecommerce.purchase_revenue_in_usd AS purchase_revenue_usd,\n  (SELECT value.string_value FROM UNNEST(event_params) WHERE key='currency' LIMIT 1) AS currency,\n  TO_JSON_STRING(ARRAY(SELECT AS STRUCT item_id, item_name, quantity, item_revenue_in_usd FROM UNNEST(items))) AS items_json\nFROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`\nWHERE _TABLE_SUFFIX BETWEEN @start AND @end\n"
+    }
+  ],
+  "version": "1.0.0",
+  "extraction_revision": "transaction_params_valid_values_v3",
+  "repaired_at": "2026-11-11T03:38:42.331774+00:00",
+  "purchase_repair_job": "8b3207ba-002b-46c0-a42d-c2cfc76283bb",
+  "initial_extract": "initial_extract_v1",
+  "local_snapshot": "data/official/events.parquet",
+  "published_database": "data\\official_build\\2026-11-11T042024754230+0000_d282ec41.duckdb",
+  "published_run": "2026-11-11T042024754230+0000_d282ec41",
+  "note": "官方样本；初版快照保留在initial_extract_v1，修复证据见reports/transaction_repair_full.json"
+}

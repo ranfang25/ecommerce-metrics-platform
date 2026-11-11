@@ -1,0 +1,22 @@
+{
+  "run_id": "2026-11-11T032744977344+0000_93ca9c24",
+  "version": "1.0.0",
+  "started_at": "2026-11-11T03:27:44.977387+00:00",
+  "status": "success",
+  "database": "2026-11-11T032744977344+0000_93ca9c24.duckdb",
+  "source_kind": "controlled",
+  "source": "固定种子生成，仅供技术测试",
+  "source_rows": 5607,
+  "start": "2020-11-01",
+  "end": "2020-11-28",
+  "snapshot_exported_at": "2026-11-11T03:14:55.801394+00:00",
+  "model_rows": {
+    "raw_events": 5607,
+    "fact_events": 5607,
+    "fact_sessions": 3054,
+    "fact_orders": 386,
+    "fact_order_items": 384
+  },
+  "finished_at": "2026-11-11T03:27:45.646720+00:00",
+  "warnings": 3
+}

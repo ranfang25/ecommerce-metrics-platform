@@ -1,0 +1,23 @@
+{
+  "run_id": "2026-11-11T042024754230+0000_d282ec41",
+  "version": "1.0.0",
+  "started_at": "2026-11-11T04:20:24.754271+00:00",
+  "status": "success",
+  "database": "2026-11-11T042024754230+0000_d282ec41.duckdb",
+  "source_kind": "official",
+  "source": "bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*",
+  "source_rows": 4295584,
+  "start": "2020-11-01",
+  "end": "2021-01-31",
+  "snapshot_exported_at": "2026-11-11T03:36:54.277186+00:00",
+  "data_revision": "transaction_params_valid_values_v3",
+  "model_rows": {
+    "raw_events": 4295584,
+    "fact_events": 4295584,
+    "fact_sessions": 360129,
+    "fact_orders": 4888,
+    "fact_order_items": 14517
+  },
+  "finished_at": "2026-11-11T04:20:34.467496+00:00",
+  "warnings": 1
+}

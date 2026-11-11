@@ -1,0 +1,331 @@
+{
+  "method": "点击页面标签至页面标题出现且Streamlit前端notRunning；包含自动化往返开销",
+  "before_cache_diagnostic_seconds": 4.099,
+  "source_rows": 4295584,
+  "period": [
+    "2021-01-18",
+    "2021-01-31"
+  ],
+  "samples": [
+    {
+      "page": "用户分层",
+      "seconds": 1.858
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 1.984
+    },
+    {
+      "page": "经营总览",
+      "seconds": 2.575
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 3.495
+    },
+    {
+      "page": "用户分层",
+      "seconds": 2.346
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 3.2
+    },
+    {
+      "page": "经营总览",
+      "seconds": 2.398
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 3.537
+    },
+    {
+      "page": "用户分层",
+      "seconds": 3.234
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 2.55
+    },
+    {
+      "page": "经营总览",
+      "seconds": 2.219
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 3.539
+    },
+    {
+      "page": "用户分层",
+      "seconds": 3.203
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 1.166
+    },
+    {
+      "page": "经营总览",
+      "seconds": 3.898
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.193
+    },
+    {
+      "page": "用户分层",
+      "seconds": 2.375
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 2.086
+    },
+    {
+      "page": "经营总览",
+      "seconds": 3.54
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.478
+    },
+    {
+      "page": "用户分层",
+      "seconds": 1.837
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 2.341
+    },
+    {
+      "page": "经营总览",
+      "seconds": 5.799
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.042
+    },
+    {
+      "page": "用户分层",
+      "seconds": 3.189
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 3.383
+    },
+    {
+      "page": "经营总览",
+      "seconds": 3.626
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.341
+    },
+    {
+      "page": "用户分层",
+      "seconds": 2.304
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 2.055
+    },
+    {
+      "page": "经营总览",
+      "seconds": 2.489
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 3.577
+    },
+    {
+      "page": "用户分层",
+      "seconds": 3.197
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 2.481
+    },
+    {
+      "page": "经营总览",
+      "seconds": 3.488
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.38
+    },
+    {
+      "page": "用户分层",
+      "seconds": 3.157
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 1.184
+    },
+    {
+      "page": "经营总览",
+      "seconds": 3.531
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.618
+    },
+    {
+      "page": "用户分层",
+      "seconds": 1.867
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 2.316
+    },
+    {
+      "page": "经营总览",
+      "seconds": 3.255
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.146
+    },
+    {
+      "page": "用户分层",
+      "seconds": 3.54
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 2.225
+    },
+    {
+      "page": "经营总览",
+      "seconds": 2.541
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.513
+    },
+    {
+      "page": "用户分层",
+      "seconds": 2.426
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 3.132
+    },
+    {
+      "page": "经营总览",
+      "seconds": 2.341
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 3.609
+    },
+    {
+      "page": "用户分层",
+      "seconds": 3.199
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 2.519
+    },
+    {
+      "page": "经营总览",
+      "seconds": 3.278
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.505
+    },
+    {
+      "page": "用户分层",
+      "seconds": 3.178
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 2.272
+    },
+    {
+      "page": "经营总览",
+      "seconds": 3.611
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.377
+    },
+    {
+      "page": "用户分层",
+      "seconds": 1.891
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 2.257
+    },
+    {
+      "page": "经营总览",
+      "seconds": 3.327
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.492
+    },
+    {
+      "page": "用户分层",
+      "seconds": 3.188
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 3.386
+    },
+    {
+      "page": "经营总览",
+      "seconds": 2.337
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.603
+    },
+    {
+      "page": "用户分层",
+      "seconds": 3.182
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 2.206
+    },
+    {
+      "page": "经营总览",
+      "seconds": 3.632
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.461
+    },
+    {
+      "page": "用户分层",
+      "seconds": 3.214
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 3.379
+    },
+    {
+      "page": "经营总览",
+      "seconds": 2.36
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 2.277
+    },
+    {
+      "page": "用户分层",
+      "seconds": 2.66
+    },
+    {
+      "page": "指标与数据运营",
+      "seconds": 2.06
+    },
+    {
+      "page": "经营总览",
+      "seconds": 2.494
+    },
+    {
+      "page": "转化诊断",
+      "seconds": 3.61
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+snapshot: data/official_7day/events.parquet
+manifest: data/official_7day/manifest.json
+output: data/official_7day_build
+expected_start: '2020-11-01'
+expected_end: '2020-11-07'

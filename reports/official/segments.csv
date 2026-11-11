@@ -1,0 +1,4 @@
+segment,users,orders,recorded_usd,purchase_event_users,unmatched_purchase_users
+窗内单次有效交易,421,421,30032.0,421,0
+窗内多次有效交易,12,41,1701.0,12,0
+窗内无有效交易,42614,0,,228,228

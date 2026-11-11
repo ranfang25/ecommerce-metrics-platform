@@ -1,0 +1,61 @@
+{
+  "executed_at": "2026-11-11T03:43:32.847959+00:00",
+  "workspace": "data\\fault_runs\\1a312443",
+  "original_source_kind": "official",
+  "idempotency": {
+    "first": "2026-11-11T033948470869+0000_b2b565f6",
+    "second": "2026-11-11T034001062589+0000_8ac7f79a",
+    "metrics_equal": true,
+    "session_and_order_keys_equal": true
+  },
+  "cases": [
+    {
+      "case": "F01",
+      "phenomenon": "交易ID相同但金额冲突",
+      "hit": "Q07",
+      "target": "1866852089",
+      "before_amount": 60.0,
+      "injected_amount": 67.0,
+      "location": "order_audit → quarantined_orders",
+      "audit": [
+        {
+          "transaction_id": "1866852089",
+          "event_rows": 2,
+          "variants": 2
+        }
+      ],
+      "isolated_rows": 2,
+      "published_valid_rows": 0,
+      "decision": "冲突交易整笔隔离；不随意取第一条",
+      "failure_run": "2026-11-11T034020563548+0000_3f19339f",
+      "repaired_run": "2026-11-11T034044634550+0000_91981b0b",
+      "verified": "恢复所有核心指标",
+      "status": "closed"
+    },
+    {
+      "case": "F02",
+      "phenomenon": "日期分区断档",
+      "missing_day": "20201217",
+      "hit": "Q01/Q18",
+      "error": "质量阻断：Q01,Q18",
+      "decision": "阻断发布并保留上次成功版本；补回测试副本",
+      "previous_run": "2026-11-11T034044634550+0000_91981b0b",
+      "pointer_preserved": true,
+      "repaired_run": "2026-11-11T034158109997+0000_689fdfa8",
+      "verified": "补跑后所有指标一致",
+      "status": "closed"
+    },
+    {
+      "case": "F03",
+      "phenomenon": "刷新失败",
+      "hit": "Q19",
+      "error": "受控刷新失败：建模完成后、发布前中断",
+      "decision": "不切换发布指针，保留上次成功库",
+      "previous_run": "2026-11-11T034158109997+0000_689fdfa8",
+      "pointer_preserved": true,
+      "repaired_run": "2026-11-11T034256230897+0000_7dfc8b04",
+      "verified": "旧库可查且恢复后所有指标一致",
+      "status": "closed"
+    }
+  ]
+}

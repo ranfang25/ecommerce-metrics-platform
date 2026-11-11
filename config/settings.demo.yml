@@ -1,0 +1,5 @@
+snapshot: tests/fixtures/events.parquet
+manifest: tests/fixtures/manifest.json
+output: data/demo_build
+expected_start: '2020-11-01'
+expected_end: '2020-11-28'
